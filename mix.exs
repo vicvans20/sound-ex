@@ -28,6 +28,6 @@ defmodule SoundEx.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:archytax, "~> 0.1.0"}]
+    [{:archytax, "~> 0.1.1"}]
   end
 end
