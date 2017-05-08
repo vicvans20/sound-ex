@@ -58,7 +58,7 @@ defmodule SoundEx do
   def play_note({note, tempo}) do
     Archytax.Tone.play(9, note, tempo)
     Archytax.set_digital_pin(8,1)
-    delay(500)
+    delay(100)
     Archytax.set_digital_pin(8,0)
     delay(1000)
   end
