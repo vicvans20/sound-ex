@@ -2,13 +2,13 @@ defmodule SoundEx do
   @moduledoc """
   Little circuit to test the capabilities of Archytax.
   """
-  @melody1 [
-    {:C4, 12}, {:C5, 12}, {:A3, 12}, {:A4, 12}
-  ]
+  # @melody1 [
+  #   {:C4, 12}, {:C5, 12}, {:A3, 12}, {:A4, 12}
+  # ]
 
-  @melody2 [
-    {:G6,12}, {:E7,12}, {:G7,12}
-  ]
+  # @melody2 [
+  #   {:G6,12}, {:E7,12}, {:G7,12}
+  # ]
 
   @initial_state %{}
 
@@ -33,8 +33,11 @@ defmodule SoundEx do
   ######################
   # Get board ready setup signal to setup the circuit.
   def handle_info({:archytax, {:ready, _anything}}, state ) do
-    Archytax.set_pin_mode(9, 1)
+    Archytax.set_pin_mode(9, 3)
     Archytax.set_pin_mode(8, 1)
+    beep(50)
+    beep(50)
+    beep(50)
     delay(1000)
 
     spawn(fn -> loop() end)
@@ -48,10 +51,11 @@ defmodule SoundEx do
 
   # Circuit Functionality
   defp loop do
-    Enum.each(@melody1, &play_note/1)
-    delay(2000)
-    Enum.each(@melody2, &play_note/1)
-    delay(2000)
+    # Enum.each(@melody1, &play_note/1)
+    # delay(2000)
+    # Enum.each(@melody2, &play_note/1)
+    # delay(2000)
+    beep(200)
     loop()
   end
 
@@ -61,5 +65,14 @@ defmodule SoundEx do
     delay(100)
     Archytax.set_digital_pin(8,0)
     delay(1000)
+  end
+
+  def beep(dms) do
+    Archytax.analog_write(9, 20)
+    Archytax.set_digital_pin(8,1)
+    delay(dms)
+    Archytax.analog_write(9,0)
+    Archytax.set_digital_pin(8,0)
+    delay(dms)
   end
 end
