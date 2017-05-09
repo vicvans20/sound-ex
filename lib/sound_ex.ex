@@ -72,17 +72,32 @@ defmodule SoundEx do
   defp loop do
     {:ok, button_value} = SoundEx.get_button_value(@button)
     exec_loop(button_value)
+    loop()
   end
+
 
   # Pressed
   def exec_loop(1) do
     beep(200)
-    loop()
   end
 
-  # Not Pressed
+  # Not Pressed(normal loop)
   def exec_loop(0) do
-    :ok
+    alter_loop(1)
+  end
+
+  def alter_loop(value) do
+    case value do
+      0 -> loop()
+      1 -> silent_loop()
+    end
+  end
+  
+
+  defp silent_loop do
+    {:ok, button_value} = SoundEx.get_button_value(@button)
+     alter_loop(button_value)
+     silent_loop()
   end
 
   def play_note({note, tempo}) do
